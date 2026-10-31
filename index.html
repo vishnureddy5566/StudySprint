@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>StudySprint — plan a calmer study week</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="StudySprint home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>study<span class="brand-light">sprint</span></span>
+      </a>
+
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list">
+        <a class="nav-link active" href="#home" aria-current="page"><span class="nav-icon">⌂</span> Overview</a>
+        <a class="nav-link" href="#tasks"><span class="nav-icon">▤</span> My subjects <span class="nav-count" id="nav-count">0</span></a>
+        <a class="nav-link" href="#focus"><span class="nav-icon">◷</span> Focus timer</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <span class="tip-spark" aria-hidden="true">✳</span>
+          <p class="tip-title">Small steps add up.</p>
+          <p class="tip-copy">A focused 25 minutes is a great place to start.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar" aria-hidden="true">S</div>
+          <div><strong>My study space</strong><span>Personal workspace</span></div>
+          <button class="icon-button" id="clear-data" title="Clear all saved data" aria-label="Clear all saved data">···</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="home">
+      <header class="topbar">
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="topbar-right"><span class="today-label" id="today-label"></span><span class="top-avatar" aria-hidden="true">S</span></div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL STUDY PLANNER</p>
+          <h1>Make room for <span>progress.</span></h1>
+          <p class="welcome-copy">Turn the next small step into a good study day.</p>
+        </div>
+        <button class="button button-primary" id="open-add"><span aria-hidden="true">＋</span> Add a subject</button>
+      </section>
+
+      <section class="stats-grid" aria-label="Study summary">
+        <article class="stat-card">
+          <div class="stat-top"><span>Active subjects</span><span class="stat-icon indigo">▤</span></div>
+          <div class="stat-number" id="stat-subjects">0</div>
+          <div class="stat-note">Keep your priorities in view</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Minutes focused</span><span class="stat-icon mint">◷</span></div>
+          <div class="stat-number"><span id="stat-minutes">0</span><small> min</small></div>
+          <div class="stat-note">Your completed focus sessions</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Tasks completed</span><span class="stat-icon peach">✓</span></div>
+          <div class="stat-number" id="stat-completed">0</div>
+          <div class="stat-note">Every finished task counts</div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel tasks-panel" id="tasks">
+          <div class="panel-heading">
+            <div><h2>Study priorities</h2><p>Sorted by deadline and difficulty</p></div>
+            <button class="text-button" id="add-another">＋ Add subject</button>
+          </div>
+          <div class="filter-row" role="group" aria-label="Filter subjects">
+            <button class="filter-chip selected" data-filter="all">All <span id="count-all">0</span></button>
+            <button class="filter-chip" data-filter="active">In progress <span id="count-active">0</span></button>
+            <button class="filter-chip" data-filter="completed">Completed <span id="count-completed">0</span></button>
+          </div>
+          <div id="subject-list" class="subject-list"></div>
+          <div id="empty-state" class="empty-state">
+            <div class="empty-illustration" aria-hidden="true"><span>✎</span></div>
+            <h3>Your study plan starts here</h3>
+            <p>Add a subject, assignment, or exam topic. We’ll sort your list by urgency and difficulty.</p>
+            <button class="button button-secondary" id="empty-add">Add your first subject</button>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <section class="panel goal-panel">
+            <div class="panel-heading compact"><div><h2>Daily focus goal</h2><p>Build a steady routine</p></div><span class="goal-badge">TODAY</span></div>
+            <div class="goal-content">
+              <div class="goal-ring" id="goal-ring" role="img" aria-label="0 of 60 focus minutes completed"><div><strong id="goal-minutes">0</strong><span>of 60 min</span></div></div>
+              <div class="goal-message"><strong id="goal-message">A fresh start</strong><span id="goal-submessage">Complete a focus session to make progress.</span></div>
+            </div>
+            <div class="goal-footer"><span>Daily target</span><strong>60 minutes</strong></div>
+          </section>
+
+          <section class="panel focus-panel" id="focus">
+            <div class="panel-heading compact"><div><h2>Focus session</h2><p>One thing at a time</p></div><span class="focus-icon">◷</span></div>
+            <div class="timer-display" id="timer-display" aria-live="polite">25:00</div>
+            <p class="timer-caption" id="timer-caption">Focus time</p>
+            <div class="timer-controls">
+              <button class="button button-primary timer-start" id="timer-toggle">Start focus</button>
+              <button class="button button-quiet" id="timer-reset" aria-label="Reset timer">↺</button>
+            </div>
+            <div class="timer-mode"><button class="mode-chip selected" data-minutes="25" data-mode="Focus">25 min focus</button><button class="mode-chip" data-minutes="5" data-mode="Short break">5 min break</button></div>
+          </section>
+        </div>
+      </section>
+      <footer class="footer-note">A calmer plan, one session at a time <span>✳</span></footer>
+
+      <details class="project-notes">
+        <summary>Project details and report guide</summary>
+        <div class="project-notes-content">
+          <p class="eyebrow">PROJECT BRIEF</p>
+          <h2>StudySprint: a student study planner</h2>
+          <p>StudySprint is a responsive, browser-based planner for students managing multiple subjects, assignments, and exam topics. It brings study tasks, deadlines, difficulty, next actions, and focus sessions into one dashboard. Its transparent priority rule helps users choose what to work on first.</p>
+          <h3>Problem and goal</h3>
+          <p>Students may track coursework in several places and find it hard to turn a long list into a manageable next action. StudySprint provides one place to capture a study item, see its urgency, and spend a focused interval working on it. The primary target users are college and university students; independent learners are also suitable users.</p>
+          <h3>Features and scope</h3>
+          <ul><li>Add a task with its name, course, optional deadline, perceived difficulty, and next step.</li><li>Rank active tasks, filter by status, mark them complete or in progress, and delete them.</li><li>Use a 25-minute focus timer or a 5-minute break timer; pause and reset sessions.</li><li>Track completed focus minutes and progress toward a 60-minute daily goal.</li><li>Save tasks and sessions in the browser. Data is not uploaded to a server.</li></ul>
+          <p>Accounts, cloud sync, notifications, collaboration, calendar integration, syllabus import, and AI-generated advice are outside the current scope. AI assisted development; the running app does not call an AI service.</p>
+          <h3>Priority rule</h3>
+          <p>Tasks are sorted by urgency points plus twice their difficulty score. Difficulty is Light = 1, Moderate = 2, or Challenging = 3. Urgency is 12 for overdue, 10 due today, 8 due tomorrow, 6 due within 3 days, 3 due within 7 days, and 1 due later. A task without a deadline receives only its difficulty points. Higher scores appear first, with older tasks first in a tie. This is an organizational hint, not a prediction of grades or workload.</p>
+          <h3>Tools and implementation</h3>
+          <ul><li>HTML5 provides the semantic page structure, controls, and task-entry dialog.</li><li>CSS3 provides the responsive dashboard and visual states.</li><li>Vanilla JavaScript implements task management, sorting, filtering, timer behavior, and rendering.</li><li>Browser LocalStorage stores task and focus-session data under <code>studysprint.v1</code>.</li><li>Codex AI assistant supported project planning and code drafting. Keep actual prompts and screenshots from your work for the submitted report.</li></ul>
+          <p>The subject data model contains <code>id</code>, <code>name</code>, <code>course</code>, <code>due</code>, <code>difficulty</code>, <code>notes</code>, <code>completed</code>, and <code>createdAt</code>. A focus-session record contains <code>date</code>, <code>minutes</code>, and <code>completedAt</code>. The app works without a build step or package installation. Google Fonts are optional; system fallbacks are provided.</p>
+          <h3>Report-ready draft</h3>
+          <h4>1. Introduction</h4>
+          <p>Students may have several assignments, course topics, and examination deadlines at the same time. When those obligations are written in separate places, it can be difficult to decide what to work on next. StudySprint is a responsive web application that brings a student's study tasks and focus sessions together in one dashboard. A student can record a task, set an optional deadline and difficulty, write a small next action, and see active tasks ordered by a simple priority rule.</p>
+          <p>The application was developed with AI assistance for planning, interface structure, and implementation support. The developer reviewed and adapted the generated code and used an explicit deadline-and-difficulty formula so task ordering is visible to the user. The running application does not send data to an AI service; task details are stored in the browser on the user's device.</p>
+          <h4>2. Target User</h4>
+          <p>The primary target users are college and university students who manage several subjects and want to keep deadlines, next actions, and focused study time in one place. The interface is designed for an individual user who wants a simple planner rather than a full learning management system. It may also suit independent learners who want a task list and a basic focus timer.</p>
+          <h4>3. Tools Used</h4>
+          <p>HTML5 is used for structure and controls; CSS3 for the responsive layout and visual states; JavaScript for task management, priority ordering, filters, and timer logic; and LocalStorage for browser-local persistence. Codex AI assistant was used to assist with project scoping, interface planning, and code drafting. The application runs in a modern web browser.</p>
+          <h4>4. Prompt Engineering Process</h4>
+          <p>Use these as prompt examples and capture genuine screenshots of your own AI interactions. Do not present these examples as historical evidence unless you actually used them.</p>
+          <ol><li><strong>Idea/problem analysis:</strong> “Suggest a small web application for college students that addresses a specific study-planning problem. Keep the first version feasible with HTML, CSS, and vanilla JavaScript, and list the target user, problem, and measurable core features.”</li><li><strong>Requirements/features:</strong> “Turn the selected study-planner idea into functional requirements. Separate must-have features from future scope. Include empty states, invalid input, persistence, and accessibility considerations.”</li><li><strong>UI/layout design:</strong> “Plan a responsive dashboard for a student study planner. Include a summary, priority task list, daily goal, focus timer, and an add-task dialog. Describe the page flow and mobile behavior.”</li><li><strong>Code generation:</strong> “Implement the agreed StudySprint UI in semantic HTML, responsive CSS, and plain JavaScript. Add task create/complete/delete, priority sorting, browser-local persistence, filters, and a focus/break timer. Do not use a backend or claim AI features in the app.”</li><li><strong>Testing plan:</strong> “Create a manual test checklist for task creation, date/difficulty sorting, filters, completion, deletion, timer start/pause/reset, persistence after reload, mobile layout, and empty states. Do not claim a check passed unless it has been run.”</li><li><strong>Debugging and improvement:</strong> “Review the implementation for incorrect date handling, unsafe HTML insertion, timer state errors, and keyboard/accessibility problems. Explain each issue and propose a minimal correction.”</li></ol>
+          <h4>5. Application Design and Development</h4>
+          <p>StudySprint uses a single-page dashboard. Its desktop layout has a navigation sidebar and a main area with a summary row, study-priority list, daily-goal indicator, and focus timer. On narrow screens, the sidebar is hidden and the content stacks into one column. An add-task dialog collects task name, category, deadline, difficulty, and next action. JavaScript stores each task as a structured object, sorts active items by the documented score, and re-renders the interface after changes. Completed focus sessions update the total and daily goal. The browser's LocalStorage API preserves the data on the current browser and device.</p>
+          <h4>6. Final Application</h4>
+          <p>The application supports task entry, optional deadlines, difficulty labels, priority ordering, next-step notes, list filters, completion and deletion actions, a focus timer with a short-break mode, a daily focus-goal indicator, and browser-local storage. The student can open this HTML file in a modern browser without creating an account. Add a public deployment URL only if you publish the application; otherwise describe it as a local browser application.</p>
+          <h4>7. Conclusion</h4>
+          <p>StudySprint organizes study tasks and focused work sessions in a single lightweight interface. Its priority score helps users notice urgent or challenging work, while the next-step field encourages turning a large subject into an actionable task. AI assistance supported the development workflow, while the final app's behavior remains transparent and browser-local. Future improvements could include editable weights, calendar export, data backup/import, reminders, user research, and an optional AI study-planning service with clear consent and privacy controls.</p>
+          <h3>Manual demonstration checklist</h3>
+          <p>Run and record these checks yourself before reporting their results: add tasks with different deadlines and difficulties; confirm their order; use each filter; mark items complete and in progress; delete an item; start, pause, resume, and reset both timer modes; complete a focus session and inspect the daily total; reload the page to check persistence; and try the layout at phone width and navigate the form by keyboard.</p>
+          <h3>Limitations and future work</h3>
+          <p>Data belongs to the current browser profile and device; clearing browser storage removes it. The timer needs the page to remain open and does not notify after the tab closes. Difficulty is self-reported and the formula does not estimate task duration, prerequisites, or available study hours. No user-study results are included; report such results only if you conduct the study.</p>
+          <h3>Submission reminders</h3>
+          <ul><li>Replace the cover-page placeholders with your project title and student details.</li><li>Capture genuine screenshots of the dashboard, add-task dialog, ranked task list, and timer/goal state; add captions and a page-structure diagram.</li><li>Refresh contents-page numbers after laying out the final report.</li><li>Include a real public link only after deployment; do not invent one.</li></ul>
+        </div>
+      </details>
+    </main>
+  </div>
+
+  <dialog id="subject-dialog" class="subject-dialog">
+    <form id="subject-form" method="dialog">
+      <div class="dialog-header"><div><p class="eyebrow">MAKE A PLAN</p><h2>Add a study subject</h2></div><button type="button" class="dialog-close" id="close-dialog" aria-label="Close dialog">×</button></div>
+      <label for="subject-name">Subject or task name</label>
+      <input id="subject-name" name="name" type="text" maxlength="70" placeholder="e.g. Data Structures — Trees" required>
+      <div class="form-two-col">
+        <div><label for="subject-course">Course / category</label><input id="subject-course" name="course" type="text" maxlength="35" placeholder="e.g. Computer Science"></div>
+        <div><label for="subject-due">Due date <span class="optional">(optional)</span></label><input id="subject-due" name="due" type="date"></div>
+      </div>
+      <label for="subject-difficulty">How challenging does it feel?</label>
+      <select id="subject-difficulty" name="difficulty"><option value="1">Light — I know the basics</option><option value="2" selected>Moderate — needs some practice</option><option value="3">Challenging — needs more attention</option></select>
+      <label for="subject-notes">Next small step <span class="optional">(optional)</span></label>
+      <textarea id="subject-notes" name="notes" rows="3" maxlength="180" placeholder="e.g. Review lecture notes and solve 3 examples"></textarea>
+      <div class="dialog-actions"><button type="button" class="button button-quiet" id="cancel-dialog">Cancel</button><button type="submit" class="button button-primary">Add to my plan</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
