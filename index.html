@@ -5,178 +5,1730 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f7fb">
   <title>StudySprint — plan a calmer study week</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <style>
+:root{
+  font-family:'DM Sans',sans-serif;
+  color:#20243a;
+  background:#f5f7fb;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  --ink:#20243a;
+  --muted:#8990a5;
+  --line:#edf0f6;
+  --purple:#655be8;
+  --purple-dark:#554bd1;
+  --bg:#f5f7fb;
+  --green:#37b89c;
+  --red:#e88179;
+  --shadow:0 8px 28px rgba(40,48,84,.045)
+}
+*{
+  box-sizing:border-box
+}
+body{
+  margin:0;
+  min-width:320px;
+  background:var(--bg)
+}
+button,input,select,textarea{
+  font:inherit
+}
+button{
+  cursor:pointer
+}
+.app-shell{
+  min-height:100vh
+}
+.sidebar{
+  width:246px;
+  background:#fff;
+  position:fixed;
+  inset:0 auto 0 0;
+  border-right:1px solid #eef0f5;
+  padding:30px 20px 22px;
+  display:flex;
+  flex-direction:column;
+  z-index:2
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 53px 4px;
+  text-decoration:none;
+  color:#22243b;
+  font-family:Manrope,sans-serif;
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:-.8px
+}
+.brand-light{
+  font-weight:500;
+  color:#777e95
+}
+.brand-mark{
+  height:31px;
+  width:31px;
+  border-radius:10px;
+  background:#655be8;
+  color:white;
+  display:grid;
+  place-items:center;
+  font-size:17px;
+  box-shadow:0 5px 12px #655be82e
+}
+.workspace-label{
+  font-size:10px;
+  letter-spacing:1.2px;
+  color:#a6acbb;
+  font-weight:700;
+  margin:0 0 12px 11px
+}
+.nav-list{
+  display:grid;
+  gap:5px
+}
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  height:43px;
+  padding:0 12px;
+  color:#767d91;
+  font-weight:600;
+  font-size:13px;
+  text-decoration:none;
+  border-radius:9px
+}
+.nav-link.active{
+  background:#f0efff;
+  color:#6158dc
+}
+.nav-icon{
+  width:18px;
+  text-align:center;
+  font-size:16px
+}
+.nav-count{
+  margin-left:auto;
+  font-size:11px;
+  background:#f0f1f6;
+  color:#7d8497;
+  border-radius:10px;
+  padding:2px 8px
+}
+.sidebar-bottom{
+  margin-top:auto
+}
+.tip-card{
+  padding:16px 15px;
+  background:#f6f5ff;
+  border-radius:12px;
+  margin-bottom:23px
+}
+.tip-spark{
+  font-size:18px;
+  color:#655be8
+}
+.tip-title{
+  margin:8px 0 5px;
+  font-weight:700;
+  font-size:13px
+}
+.tip-copy{
+  margin:0;
+  color:#868ba0;
+  font-size:11px;
+  line-height:1.55
+}
+.profile{
+  border-top:1px solid var(--line);
+  padding:18px 2px 0;
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+.avatar,.top-avatar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#eeeaff;
+  color:#675de2;
+  font-weight:700;
+  font-size:13px
+}
+.profile strong,.profile span{
+  display:block
+}
+.profile strong{
+  font-size:11px
+}
+.profile span{
+  font-size:10px;
+  color:#a0a5b3;
+  margin-top:3px
+}
+.icon-button{
+  margin-left:auto;
+  border:0;
+  background:transparent;
+  color:#8d93a4;
+  font-weight:800;
+  font-size:18px
+}
+.main-content{
+  margin-left:246px;
+  padding:0 44px 24px;
+  max-width:1660px
+}
+.topbar{
+  height:76px;
+  border-bottom:1px solid #e9ecf3;
+  display:flex;
+  align-items:center;
+  justify-content:space-between
+}
+.breadcrumb{
+  font-size:12px;
+  color:#9aa0b0
+}
+.breadcrumb span{
+  padding:0 9px;
+  color:#c2c6d0
+}
+.breadcrumb strong{
+  color:#555c70;
+  font-weight:600
+}
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:16px
+}
+.today-label{
+  font-size:11px;
+  color:#8c92a4
+}
+.top-avatar{
+  width:30px;
+  height:30px;
+  font-size:11px
+}
+.welcome-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:33px 0 25px
+}
+.eyebrow{
+  font-size:9px;
+  color:#999fb0;
+  font-weight:700;
+  letter-spacing:1.2px;
+  margin:0 0 8px
+}
+.welcome-row h1{
+  font:800 28px/1.2 Manrope,sans-serif;
+  letter-spacing:-1.1px;
+  margin:0;
+  color:#252941
+}
+.welcome-row h1 span{
+  color:#655be8
+}
+.welcome-copy{
+  font-size:12px;
+  color:#8d93a5;
+  margin:9px 0 0
+}
+.button{
+  border:0;
+  border-radius:8px;
+  height:39px;
+  padding:0 15px;
+  font-size:11px;
+  font-weight:700;
+  transition:transform .15s,background .15s
+}
+.button:active{
+  transform:translateY(1px)
+}
+.button-primary{
+  color:white;
+  background:var(--purple);
+  box-shadow:0 4px 10px #655be826
+}
+.button-primary:hover{
+  background:var(--purple-dark)
+}
+.welcome-row .button{
+  height:40px
+}
+.welcome-row .button span{
+  font-size:16px;
+  vertical-align:-1px;
+  margin-right:4px
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+  margin-bottom:20px
+}
+.stat-card,.panel{
+  background:#fff;
+  border:1px solid #eef0f5;
+  border-radius:12px;
+  box-shadow:var(--shadow)
+}
+.stat-card{
+  min-height:124px;
+  padding:17px 19px
+}
+.stat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#878ea1;
+  font-size:11px;
+  font-weight:600
+}
+.stat-icon{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  font-size:13px
+}
+.indigo{
+  background:#f0efff;
+  color:#685fe3
+}
+.mint{
+  background:#e9f8f4;
+  color:#3bb49b
+}
+.peach{
+  background:#fff1eb;
+  color:#e88771
+}
+.stat-number{
+  font:800 25px Manrope,sans-serif;
+  letter-spacing:-.6px;
+  margin:6px 0 2px;
+  color:#292d45
+}
+.stat-number small{
+  font:600 11px 'DM Sans',sans-serif;
+  color:#9197a7;
+  letter-spacing:0
+}
+.stat-note{
+  font-size:10px;
+  color:#a0a5b3
+}
+.content-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.65fr) minmax(250px,.88fr);
+  gap:17px;
+  align-items:start
+}
+.panel{
+  padding:19px
+}
+.tasks-panel{
+  min-height:480px
+}
+.panel-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start
+}
+.panel-heading h2{
+  font:700 15px Manrope,sans-serif;
+  margin:0;
+  color:#2d3048;
+  letter-spacing:-.25px
+}
+.panel-heading p{
+  font-size:10px;
+  color:#9ba1b0;
+  margin:5px 0 0
+}
+.text-button{
+  border:0;
+  background:transparent;
+  color:#655be8;
+  font-size:10px;
+  font-weight:700;
+  padding:4px 0
+}
+.filter-row{
+  display:flex;
+  gap:7px;
+  margin:21px 0 13px;
+  overflow:auto
+}
+.filter-chip{
+  white-space:nowrap;
+  border:1px solid #edf0f5;
+  background:white;
+  border-radius:7px;
+  padding:6px 9px;
+  font-size:9px;
+  color:#858b9d;
+  font-weight:600
+}
+.filter-chip span{
+  display:inline-grid;
+  place-items:center;
+  margin-left:4px;
+  min-width:15px;
+  height:15px;
+  border-radius:7px;
+  background:#f4f5f9;
+  font-size:8px
+}
+.filter-chip.selected{
+  border-color:#e2e0ff;
+  background:#f5f4ff;
+  color:#655be8
+}
+.filter-chip.selected span{
+  background:#e9e7ff;
+  color:#655be8
+}
+.subject-list{
+  display:grid;
+  gap:9px
+}
+.subject-card{
+  border:1px solid #eff1f6;
+  border-radius:9px;
+  padding:13px 13px 12px;
+  display:grid;
+  grid-template-columns:27px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start
+}
+.check-button{
+  width:21px;
+  height:21px;
+  border:1.5px solid #d9dce7;
+  background:white;
+  border-radius:7px;
+  color:white;
+  display:grid;
+  place-items:center;
+  padding:0;
+  font-size:12px;
+  margin-top:1px
+}
+.check-button.done{
+  background:#43b99d;
+  border-color:#43b99d
+}
+.subject-main{
+  min-width:0
+}
+.subject-title{
+  font-size:11px;
+  font-weight:700;
+  color:#34384f;
+  line-height:1.4;
+  overflow-wrap:anywhere
+}
+.subject-card.is-done .subject-title{
+  text-decoration:line-through;
+  color:#9da2af
+}
+.subject-meta{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:6px;
+  flex-wrap:wrap
+}
+.subject-course{
+  font-size:9px;
+  color:#9399a9
+}
+.meta-separator{
+  font-size:8px;
+  color:#c5c8d1
+}
+.due-label{
+  font-size:9px;
+  color:#898fa1
+}
+.due-label.overdue{
+  color:#df7069;
+  font-weight:700
+}
+.difficulty{
+  font-size:8px;
+  border-radius:5px;
+  padding:3px 6px;
+  font-weight:700
+}
+.difficulty-1{
+  background:#eaf7f2;
+  color:#3a9c82
+}
+.difficulty-2{
+  background:#f1efff;
+  color:#675cdf
+}
+.difficulty-3{
+  background:#fff0ec;
+  color:#d67a69
+}
+.subject-note{
+  font-size:10px;
+  color:#9298a8;
+  margin-top:8px;
+  line-height:1.5
+}
+.subject-actions{
+  display:flex;
+  align-items:center;
+  gap:4px
+}
+.priority-label{
+  font-size:8px;
+  font-weight:700;
+  color:#9a90dd;
+  background:#f5f3ff;
+  padding:4px 6px;
+  border-radius:5px
+}
+.delete-button{
+  border:0;
+  background:transparent;
+  color:#afb3bf;
+  font-size:14px;
+  padding:3px
+}
+.delete-button:hover{
+  color:#df7069
+}
+.empty-state{
+  text-align:center;
+  padding:27px 18px 20px;
+  display:none
+}
+.empty-state.visible{
+  display:block
+}
+.empty-illustration{
+  width:54px;
+  height:54px;
+  border-radius:17px;
+  background:#f2f0ff;
+  color:#6e64e8;
+  margin:0 auto 12px;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+  transform:rotate(-4deg)
+}
+.empty-state h3{
+  font:700 13px Manrope,sans-serif;
+  margin:0 0 6px
+}
+.empty-state p{
+  max-width:260px;
+  margin:0 auto 14px;
+  font-size:10px;
+  line-height:1.55;
+  color:#9298a8
+}
+.button-secondary{
+  background:#f1f0ff;
+  color:#655be8;
+  height:34px
+}
+.right-column{
+  display:grid;
+  gap:16px
+}
+.goal-panel,.focus-panel{
+  padding:18px
+}
+.panel-heading.compact{
+  align-items:center
+}
+.goal-badge{
+  font-size:8px;
+  letter-spacing:.7px;
+  color:#6d63df;
+  background:#f3f1ff;
+  border-radius:5px;
+  padding:5px 7px;
+  font-weight:700
+}
+.goal-content{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:20px 4px 17px
+}
+.goal-ring{
+  --progress:0deg;
+  width:82px;
+  height:82px;
+  flex:0 0 auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(#655be8 var(--progress),#efeff7 var(--progress))
+}
+.goal-ring:before{
+  content:"";
+  grid-area:1/1;
+  width:66px;
+  height:66px;
+  background:white;
+  border-radius:50%
+}
+.goal-ring>div{
+  grid-area:1/1;
+  z-index:1;
+  text-align:center
+}
+.goal-ring strong,.goal-ring span{
+  display:block
+}
+.goal-ring strong{
+  font:800 18px Manrope,sans-serif
+}
+.goal-ring span{
+  font-size:8px;
+  color:#989eac;
+  margin-top:1px
+}
+.goal-message strong,.goal-message span{
+  display:block
+}
+.goal-message strong{
+  font-size:10px;
+  margin-bottom:4px
+}
+.goal-message span{
+  font-size:9px;
+  color:#969cac;
+  line-height:1.45
+}
+.goal-footer{
+  display:flex;
+  justify-content:space-between;
+  padding-top:11px;
+  border-top:1px solid var(--line);
+  font-size:9px;
+  color:#969cac
+}
+.goal-footer strong{
+  color:#555b70;
+  font-size:9px
+}
+.focus-icon{
+  font-size:18px;
+  color:#6c62e2
+}
+.timer-display{
+  text-align:center;
+  font:800 43px Manrope,sans-serif;
+  letter-spacing:-2px;
+  color:#282c44;
+  margin-top:23px
+}
+.timer-caption{
+  text-align:center;
+  margin:0;
+  color:#9ca1b0;
+  font-size:9px
+}
+.timer-controls{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin:16px 0 13px
+}
+.timer-start{
+  height:34px;
+  min-width:130px;
+  font-size:10px
+}
+.button-quiet{
+  border:1px solid #eceef4;
+  background:#fff;
+  color:#858b9c;
+  width:35px;
+  height:34px;
+  padding:0;
+  font-size:16px
+}
+.timer-mode{
+  display:flex;
+  justify-content:center;
+  gap:6px
+}
+.mode-chip{
+  font-size:8px;
+  color:#8f95a5;
+  border:0;
+  background:#f6f7fa;
+  border-radius:5px;
+  padding:6px 8px
+}
+.mode-chip.selected{
+  color:#655be8;
+  background:#f0efff;
+  font-weight:700
+}
+.footer-note{
+  text-align:center;
+  color:#a3a8b5;
+  font-size:9px;
+  padding:20px 0 4px
+}
+.footer-note span{
+  color:#756be3;
+  margin-left:3px
+}
+.subject-dialog{
+  width:min(460px,calc(100% - 28px));
+  border:0;
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 24px 80px #1d24443a;
+  color:var(--ink)
+}
+.subject-dialog::backdrop{
+  background:#22263d73;
+  backdrop-filter:blur(2px)
+}
+.dialog-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:21px
+}
+.dialog-header h2{
+  font:800 20px Manrope,sans-serif;
+  margin:0;
+  letter-spacing:-.5px
+}
+.dialog-close{
+  border:0;
+  background:#f3f4f8;
+  border-radius:7px;
+  width:29px;
+  height:29px;
+  color:#73798a;
+  font-size:20px;
+  line-height:1
+}
+.subject-dialog label{
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  color:#53596c;
+  margin:14px 0 6px
+}
+.subject-dialog input,.subject-dialog select,.subject-dialog textarea{
+  width:100%;
+  border:1px solid #e6e9f0;
+  border-radius:7px;
+  padding:10px 11px;
+  background:#fff;
+  color:#30344b;
+  font-size:11px;
+  outline:none
+}
+.subject-dialog input:focus,.subject-dialog select:focus,.subject-dialog textarea:focus{
+  border-color:#8a82ec;
+  box-shadow:0 0 0 3px #655be817
+}
+.subject-dialog textarea{
+  resize:vertical
+}
+.subject-dialog input::placeholder,.subject-dialog textarea::placeholder{
+  color:#b2b6c2
+}
+.form-two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+.optional{
+  font-weight:400;
+  color:#a0a5b2
+}
+.dialog-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:21px
+}
+.dialog-actions .button{
+  height:36px
+}
+.toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,15px);
+  padding:10px 15px;
+  color:white;
+  background:#30344b;
+  border-radius:8px;
+  font-size:11px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:5;
+  box-shadow:0 8px 25px #22263d28
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0)
+}
+@media(max-width:1050px){
+  .sidebar{
+    width:210px
+  }
+  .main-content{
+    margin-left:210px;
+    padding:0 25px 22px
+  }
+  .content-grid{
+    grid-template-columns:minmax(0,1.45fr) minmax(235px,.9fr)
+  }
+  .stat-card{
+    padding:15px
+  }
+  .welcome-row h1{
+    font-size:25px
+  }
+}
+@media(max-width:800px){
+  .sidebar{
+    width:64px;
+    padding:19px 10px
+  }
+  .brand{
+    margin:0 auto 45px
+  }
+  .brand>span:last-child,.workspace-label,.nav-link:not(.active),.nav-link.active{
+    font-size:0
+  }
+  .nav-link{
+    justify-content:center;
+    padding:0
+  }
+  .nav-icon{
+    font-size:18px
+  }
+  .sidebar .nav-count,.sidebar-bottom .tip-card,.profile>div:not(.avatar),.profile .icon-button{
+    display:none
+  }
+  .profile{
+    justify-content:center
+  }
+  .main-content{
+    margin-left:64px;
+    padding:0 20px 20px
+  }
+  .content-grid{
+    grid-template-columns:1fr
+  }
+  .right-column{
+    grid-template-columns:1fr 1fr
+  }
+  .tasks-panel{
+    min-height:unset
+  }
+}
+@media(max-width:580px){
+  .sidebar{
+    display:none
+  }
+  .main-content{
+    margin-left:0;
+    padding:0 15px 18px
+  }
+  .topbar{
+    height:58px
+  }
+  .today-label{
+    font-size:9px
+  }
+  .welcome-row{
+    align-items:flex-start;
+    gap:12px;
+    padding:25px 0 18px
+  }
+  .welcome-row h1{
+    font-size:22px
+  }
+  .welcome-copy{
+    max-width:215px;
+    line-height:1.5
+  }
+  .welcome-row>.button{
+    font-size:0;
+    padding:0;
+    width:39px;
+    flex:0 0 auto
+  }
+  .welcome-row>.button span{
+    font-size:18px;
+    margin:0
+  }
+  .stats-grid{
+    gap:8px;
+    margin-bottom:13px
+  }
+  .stat-card{
+    min-height:104px;
+    padding:12px 10px
+  }
+  .stat-top{
+    font-size:9px;
+    gap:4px
+  }
+  .stat-icon{
+    width:23px;
+    height:23px;
+    font-size:11px
+  }
+  .stat-number{
+    font-size:21px;
+    margin-top:8px
+  }
+  .stat-note{
+    font-size:8px;
+    line-height:1.4
+  }
+  .content-grid{
+    gap:13px
+  }
+  .panel{
+    padding:15px
+  }
+  .right-column{
+    grid-template-columns:1fr
+  }
+  .tasks-panel{
+    padding:15px 12px
+  }
+  .filter-row{
+    margin-top:16px
+  }
+  .subject-card{
+    padding:11px 9px;
+    grid-template-columns:24px minmax(0,1fr) auto;
+    gap:7px
+  }
+  .priority-label{
+    display:none
+  }
+  .goal-content{
+    justify-content:center
+  }
+  .form-two-col{
+    grid-template-columns:1fr;
+    gap:0
+  }
+  .subject-dialog{
+    padding:20px
+  }
+}
+.project-notes{
+  margin:8px 0 26px;
+  background:#fff;
+  border:1px solid #eef0f5;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  color:#555b70
+}
+.project-notes>summary{
+  padding:15px 18px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:700;
+  color:#655be8;
+  list-style-position:inside
+}
+.project-notes-content{
+  padding:4px 22px 24px;
+  max-width:900px;
+  font-size:12px;
+  line-height:1.7
+}
+.project-notes-content h2{
+  font:800 23px Manrope,sans-serif;
+  color:#252941;
+  margin:0 0 12px
+}
+.project-notes-content h3{
+  font:700 15px Manrope,sans-serif;
+  color:#30344b;
+  margin:24px 0 6px
+}
+.project-notes-content h4{
+  font:700 13px Manrope,sans-serif;
+  color:#454b61;
+  margin:19px 0 5px
+}
+.project-notes-content p{
+  margin:7px 0 10px
+}
+.project-notes-content li{
+  margin:4px 0
+}
+.project-notes-content code{
+  background:#f3f2ff;
+  padding:1px 4px;
+  border-radius:4px;
+  color:#5a51c8
+}
+.report-lead{
+  font-size:13px;
+  color:#777e92;
+  max-width:760px
+}
+.report-toc{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:20px 0 26px
+}
+.report-toc a{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid #eceef5;
+  border-radius:8px;
+  padding:10px;
+  color:#555b70;
+  text-decoration:none;
+  font-size:10px;
+  font-weight:700;
+  background:#fcfcfe
+}
+.report-toc a:hover{
+  border-color:#c9c5ff;
+  background:#f7f6ff;
+  color:#5d54d5
+}
+.report-toc a span{
+  color:#8178e8;
+  font-size:9px
+}
+.project-notes-content h4{
+  scroll-margin-top:18px;
+  padding-top:5px;
+  border-top:1px solid #eef0f5
+}
+.project-notes-content h3{
+  scroll-margin-top:18px
+}
+.architecture-diagram{
+  margin:18px auto 5px;
+  padding:18px;
+  max-width:680px;
+  background:#fafaff;
+  border:1px solid #eceaf9;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center
+}
+.diagram-node{
+  padding:11px 14px;
+  border:1px solid #e6e8f1;
+  background:#fff;
+  border-radius:8px;
+  color:#454b61;
+  font-size:10px;
+  font-weight:700;
+  min-width:145px
+}
+.diagram-node small{
+  font-size:8px;
+  color:#9399aa;
+  font-weight:500
+}
+.diagram-user{
+  min-width:110px
+}
+.diagram-main{
+  background:#eeeaff;
+  border-color:#dcd8ff;
+  color:#5f56d2
+}
+.diagram-storage{
+  background:#eaf8f4;
+  border-color:#d5f0e7;
+  color:#308c76
+}
+.diagram-connector{
+  font-size:9px;
+  color:#8b90a2
+}
+.diagram-branches{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  width:100%;
+  max-width:570px
+}
+.diagram-caption{
+  text-align:center;
+  font-size:9px!important;
+  color:#969cad;
+  margin:5px 0 15px!important
+}
+@media(max-width:700px){
+  .report-toc{
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+  .project-notes-content{
+    padding:4px 16px 20px
+  }
+  .architecture-diagram{
+    padding:12px 8px
+  }
+  .diagram-branches{
+    gap:5px
+  }
+  .diagram-node{
+    min-width:0;
+    width:100%;
+    padding:9px 5px;
+    font-size:9px
+  }
+}
+</style>
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="StudySprint home">
-        <span class="brand-mark" aria-hidden="true">S</span>
-        <span>study<span class="brand-light">sprint</span></span>
-      </a>
+<aside class="sidebar" aria-label="Main navigation">
+<a class="brand" href="#home" aria-label="StudySprint home">
+<span class="brand-mark" aria-hidden="true">S</span>
+<span>study<span class="brand-light">sprint</span>
+</span>
+</a>
+<div class="workspace-label">WORKSPACE</div>
+<nav class="nav-list">
+<a class="nav-link active" href="#home" aria-current="page">
+<span class="nav-icon">⌂</span> Overview</a>
+<a class="nav-link" href="#tasks">
+<span class="nav-icon">▤</span> My subjects <span class="nav-count" id="nav-count">0</span>
+</a>
+<a class="nav-link" href="#focus">
+<span class="nav-icon">◷</span> Focus timer</a>
+<a class="nav-link" href="#project-report">
+<span class="nav-icon">▧</span> Project report</a>
+</nav>
+<div class="sidebar-bottom">
+<div class="tip-card">
+<span class="tip-spark" aria-hidden="true">✳</span>
+<p class="tip-title">Small steps add up.</p>
+<p class="tip-copy">A focused 25 minutes is a great place to start.</p>
+</div>
+<div class="profile">
+<div class="avatar" aria-hidden="true">S</div>
+<div>
+<strong>My study space</strong>
+<span>Personal workspace</span>
+</div>
+<button class="icon-button" id="clear-data" title="Clear all saved data" aria-label="Clear all saved data">···</button>
+</div>
+</div>
+</aside>
+<main class="main-content" id="home">
+<header class="topbar">
+<div class="breadcrumb">Workspace <span>/</span>
+<strong>Overview</strong>
+</div>
+<div class="topbar-right">
+<span class="today-label" id="today-label">
+</span>
+<span class="top-avatar" aria-hidden="true">S</span>
+</div>
+</header>
+<section class="welcome-row">
+<div>
+<p class="eyebrow">YOUR PERSONAL STUDY PLANNER</p>
+<h1>Make room for <span>progress.</span>
+</h1>
+<p class="welcome-copy">Turn the next small step into a good study day.</p>
+</div>
+<button class="button button-primary" id="open-add">
+<span aria-hidden="true">＋</span> Add a subject</button>
+</section>
+<section class="stats-grid" aria-label="Study summary">
+<article class="stat-card">
+<div class="stat-top">
+<span>Active subjects</span>
+<span class="stat-icon indigo">▤</span>
+</div>
+<div class="stat-number" id="stat-subjects">0</div>
+<div class="stat-note">Keep your priorities in view</div>
+</article>
+<article class="stat-card">
+<div class="stat-top">
+<span>Minutes focused</span>
+<span class="stat-icon mint">◷</span>
+</div>
+<div class="stat-number">
+<span id="stat-minutes">0</span>
+<small> min</small>
+</div>
+<div class="stat-note">Your completed focus sessions</div>
+</article>
+<article class="stat-card">
+<div class="stat-top">
+<span>Tasks completed</span>
+<span class="stat-icon peach">✓</span>
+</div>
+<div class="stat-number" id="stat-completed">0</div>
+<div class="stat-note">Every finished task counts</div>
+</article>
+</section>
+<section class="content-grid">
+<div class="panel tasks-panel" id="tasks">
+<div class="panel-heading">
+<div>
+<h2>Study priorities</h2>
+<p>Sorted by deadline and difficulty</p>
+</div>
+<button class="text-button" id="add-another">＋ Add subject</button>
+</div>
+<div class="filter-row" role="group" aria-label="Filter subjects">
+<button class="filter-chip selected" data-filter="all">All <span id="count-all">0</span>
+</button>
+<button class="filter-chip" data-filter="active">In progress <span id="count-active">0</span>
+</button>
+<button class="filter-chip" data-filter="completed">Completed <span id="count-completed">0</span>
+</button>
+</div>
+<div id="subject-list" class="subject-list">
+</div>
+<div id="empty-state" class="empty-state">
+<div class="empty-illustration" aria-hidden="true">
+<span>✎</span>
+</div>
+<h3>Your study plan starts here</h3>
+<p>Add a subject, assignment, or exam topic. We’ll sort your list by urgency and difficulty.</p>
+<button class="button button-secondary" id="empty-add">Add your first subject</button>
+</div>
+</div>
+<div class="right-column">
+<section class="panel goal-panel">
+<div class="panel-heading compact">
+<div>
+<h2>Daily focus goal</h2>
+<p>Build a steady routine</p>
+</div>
+<span class="goal-badge">TODAY</span>
+</div>
+<div class="goal-content">
+<div class="goal-ring" id="goal-ring" role="img" aria-label="0 of 60 focus minutes completed">
+<div>
+<strong id="goal-minutes">0</strong>
+<span>of 60 min</span>
+</div>
+</div>
+<div class="goal-message">
+<strong id="goal-message">A fresh start</strong>
+<span id="goal-submessage">Complete a focus session to make progress.</span>
+</div>
+</div>
+<div class="goal-footer">
+<span>Daily target</span>
+<strong>60 minutes</strong>
+</div>
+</section>
+<section class="panel focus-panel" id="focus">
+<div class="panel-heading compact">
+<div>
+<h2>Focus session</h2>
+<p>One thing at a time</p>
+</div>
+<span class="focus-icon">◷</span>
+</div>
+<div class="timer-display" id="timer-display" aria-live="polite">25:00</div>
+<p class="timer-caption" id="timer-caption">Focus time</p>
+<div class="timer-controls">
+<button class="button button-primary timer-start" id="timer-toggle">Start focus</button>
+<button class="button button-quiet" id="timer-reset" aria-label="Reset timer">↺</button>
+</div>
+<div class="timer-mode">
+<button class="mode-chip selected" data-minutes="25" data-mode="Focus">25 min focus</button>
+<button class="mode-chip" data-minutes="5" data-mode="Short break">5 min break</button>
+</div>
+</section>
+</div>
+</section>
+<footer class="footer-note">A calmer plan, one session at a time <span>✳</span>
+</footer>
+<section class="project-notes" id="project-report">
+<div class="project-notes-content">
+<p class="eyebrow">PROJECT BRIEF</p>
+<h2>StudySprint project report</h2>
+<p class="report-lead">This project page follows the seven sections in the IPE report format. The working planner is above; use this guide to understand the problem, users, tools, AI-assisted workflow, design, and final application.</p>
+<nav class="report-toc" aria-label="Project report sections">
+<a href="#report-introduction">
+<span>01</span> Introduction</a>
+<a href="#report-target-user">
+<span>02</span> Target user</a>
+<a href="#report-tools">
+<span>03</span> Tools used</a>
+<a href="#report-prompts">
+<span>04</span> Prompt process</a>
+<a href="#report-design">
+<span>05</span> Design and development</a>
+<a href="#report-final">
+<span>06</span> Final application</a>
+<a href="#report-conclusion">
+<span>07</span> Conclusion</a>
+</nav>
+<p>StudySprint is a responsive, browser-based planner for students managing multiple subjects, assignments, and exam topics. It brings study tasks, deadlines, difficulty, next actions, and focus sessions into one dashboard. Its transparent priority rule helps users choose what to work on first.</p>
+<h3>Problem and goal</h3>
+<p>Students may track coursework in several places and find it hard to turn a long list into a manageable next action. StudySprint provides one place to capture a study item, see its urgency, and spend a focused interval working on it. The primary target users are college and university students; independent learners are also suitable users.</p>
+<h3>Features and scope</h3>
+<ul>
+<li>Add a task with its name, course, optional deadline, perceived difficulty, and next step.</li>
+<li>Rank active tasks, filter by status, mark them complete or in progress, and delete them.</li>
+<li>Use a 25-minute focus timer or a 5-minute break timer; pause and reset sessions.</li>
+<li>Track completed focus minutes and progress toward a 60-minute daily goal.</li>
+<li>Save tasks and sessions in the browser. Data is not uploaded to a server.</li>
+</ul>
+<p>Accounts, cloud sync, notifications, collaboration, calendar integration, syllabus import, and AI-generated advice are outside the current scope. AI assisted development; the running app does not call an AI service.</p>
+<h3>Priority rule</h3>
+<p>Tasks are sorted by urgency points plus twice their difficulty score. Difficulty is Light = 1, Moderate = 2, or Challenging = 3. Urgency is 12 for overdue, 10 due today, 8 due tomorrow, 6 due within 3 days, 3 due within 7 days, and 1 due later. A task without a deadline receives only its difficulty points. Higher scores appear first, with older tasks first in a tie. This is an organizational hint, not a prediction of grades or workload.</p>
+<h3>Tools and implementation</h3>
+<ul>
+<li>HTML5 provides the semantic page structure, controls, and task-entry dialog.</li>
+<li>CSS3 provides the responsive dashboard and visual states.</li>
+<li>Vanilla JavaScript implements task management, sorting, filtering, timer behavior, and rendering.</li>
+<li>Browser LocalStorage stores task and focus-session data under <code>studysprint.v1</code>.</li>
+<li>Codex AI assistant supported project planning and code drafting. Keep actual prompts and screenshots from your work for the submitted report.</li>
+</ul>
+<p>The subject data model contains <code>id</code>, <code>name</code>, <code>course</code>, <code>due</code>, <code>difficulty</code>, <code>notes</code>, <code>completed</code>, and <code>createdAt</code>. A focus-session record contains <code>date</code>, <code>minutes</code>, and <code>completedAt</code>. The app works without a build step, package installation, or external asset dependency; system fonts are used.</p>
+<h3>Report-ready draft</h3>
+<h4 id="report-introduction">1. Introduction</h4>
+<p>Students may have several assignments, course topics, and examination deadlines at the same time. When those obligations are written in separate places, it can be difficult to decide what to work on next. StudySprint is a responsive web application that brings a student's study tasks and focus sessions together in one dashboard. A student can record a task, set an optional deadline and difficulty, write a small next action, and see active tasks ordered by a simple priority rule.</p>
+<p>The application was developed with AI assistance for planning, interface structure, and implementation support. The developer reviewed and adapted the generated code and used an explicit deadline-and-difficulty formula so task ordering is visible to the user. The running application does not send data to an AI service; task details are stored in the browser on the user's device.</p>
+<h4 id="report-target-user">2. Target User</h4>
+<p>The primary target users are college and university students who manage several subjects and want to keep deadlines, next actions, and focused study time in one place. The interface is designed for an individual user who wants a simple planner rather than a full learning management system. It may also suit independent learners who want a task list and a basic focus timer.</p>
+<h4 id="report-tools">3. Tools Used</h4>
+<p>HTML5 is used for structure and controls; CSS3 for the responsive layout and visual states; JavaScript for task management, priority ordering, filters, and timer logic; and LocalStorage for browser-local persistence. Codex AI assistant was used to assist with project scoping, interface planning, and code drafting. The application runs in a modern web browser.</p>
+<h4 id="report-prompts">4. Prompt Engineering Process</h4>
+<p>Use these as prompt examples and capture genuine screenshots of your own AI interactions. Do not present these examples as historical evidence unless you actually used them.</p>
+<ol>
+<li>
+<strong>Idea/problem analysis:</strong> “Suggest a small web application for college students that addresses a specific study-planning problem. Keep the first version feasible with HTML, CSS, and vanilla JavaScript, and list the target user, problem, and measurable core features.”</li>
+<li>
+<strong>Requirements/features:</strong> “Turn the selected study-planner idea into functional requirements. Separate must-have features from future scope. Include empty states, invalid input, persistence, and accessibility considerations.”</li>
+<li>
+<strong>UI/layout design:</strong> “Plan a responsive dashboard for a student study planner. Include a summary, priority task list, daily goal, focus timer, and an add-task dialog. Describe the page flow and mobile behavior.”</li>
+<li>
+<strong>Code generation:</strong> “Implement the agreed StudySprint UI in semantic HTML, responsive CSS, and plain JavaScript. Add task create/complete/delete, priority sorting, browser-local persistence, filters, and a focus/break timer. Do not use a backend or claim AI features in the app.”</li>
+<li>
+<strong>Testing plan:</strong> “Create a manual test checklist for task creation, date/difficulty sorting, filters, completion, deletion, timer start/pause/reset, persistence after reload, mobile layout, and empty states. Do not claim a check passed unless it has been run.”</li>
+<li>
+<strong>Debugging and improvement:</strong> “Review the implementation for incorrect date handling, unsafe HTML insertion, timer state errors, and keyboard/accessibility problems. Explain each issue and propose a minimal correction.”</li>
+</ol>
+<h4 id="report-design">5. Application Design and Development</h4>
+<p>StudySprint uses a single-page dashboard. Its desktop layout has a navigation sidebar and a main area with a summary row, study-priority list, daily-goal indicator, and focus timer. On narrow screens, the sidebar is hidden and the content stacks into one column. An add-task dialog collects task name, category, deadline, difficulty, and next action. JavaScript stores each task as a structured object, sorts active items by the documented score, and re-renders the interface after changes. Completed focus sessions update the total and daily goal. The browser's LocalStorage API preserves the data on the current browser and device.</p>
+<div class="architecture-diagram" role="img" aria-label="System structure: student uses the StudySprint dashboard, which contains study priorities, a focus timer, and a daily goal; task and session data are saved in browser local storage.">
+<div class="diagram-node diagram-user">Student</div>
+<div class="diagram-connector">↓ uses</div>
+<div class="diagram-node diagram-main">StudySprint dashboard</div>
+<div class="diagram-branches">
+<div class="diagram-node">Study priorities<br>
+<small>tasks and deadlines</small>
+</div>
+<div class="diagram-node">Focus timer<br>
+<small>focus and break</small>
+</div>
+<div class="diagram-node">Daily goal<br>
+<small>minutes completed</small>
+</div>
+</div>
+<div class="diagram-connector">↓ saves locally</div>
+<div class="diagram-node diagram-storage">Browser LocalStorage</div>
+</div>
+<p class="diagram-caption">Figure 1. StudySprint page and data structure.</p>
+<p>The live interface above serves as the application demonstration: add a subject, inspect its priority, try the filters, and operate the timer. For a submitted report, capture screenshots of the running interface and add captions. Do not use placeholder images in place of actual screenshots.</p>
+<h4 id="report-final">6. Final Application</h4>
+<p>The application supports task entry, optional deadlines, difficulty labels, priority ordering, next-step notes, list filters, completion and deletion actions, a focus timer with a short-break mode, a daily focus-goal indicator, and browser-local storage. The student can open this HTML file in a modern browser without creating an account. Add a public deployment URL only if you publish the application; otherwise describe it as a local browser application.</p>
+<h4 id="report-conclusion">7. Conclusion</h4>
+<p>StudySprint organizes study tasks and focused work sessions in a single lightweight interface. Its priority score helps users notice urgent or challenging work, while the next-step field encourages turning a large subject into an actionable task. AI assistance supported the development workflow, while the final app's behavior remains transparent and browser-local. Future improvements could include editable weights, calendar export, data backup/import, reminders, user research, and an optional AI study-planning service with clear consent and privacy controls.</p>
+<h3>Manual demonstration checklist</h3>
+<p>Run and record these checks yourself before reporting their results: add tasks with different deadlines and difficulties; confirm their order; use each filter; mark items complete and in progress; delete an item; start, pause, resume, and reset both timer modes; complete a focus session and inspect the daily total; reload the page to check persistence; and try the layout at phone width and navigate the form by keyboard.</p>
+<h3>Limitations and future work</h3>
+<p>Data belongs to the current browser profile and device; clearing browser storage removes it. The timer needs the page to remain open and does not notify after the tab closes. Difficulty is self-reported and the formula does not estimate task duration, prerequisites, or available study hours. No user-study results are included; report such results only if you conduct the study.</p>
+<h3>Submission reminders</h3>
+<ul>
+<li>Replace the cover-page placeholders with your project title and student details.</li>
+<li>Capture genuine screenshots of the dashboard, add-task dialog, ranked task list, and timer/goal state; add captions and a page-structure diagram.</li>
+<li>Refresh contents-page numbers after laying out the final report.</li>
+<li>Include a real public link only after deployment; do not invent one.</li>
+</ul>
+</div>
+</section>
+</main>
+</div>
+<dialog id="subject-dialog" class="subject-dialog">
+<form id="subject-form" method="dialog">
+<div class="dialog-header">
+<div>
+<p class="eyebrow">MAKE A PLAN</p>
+<h2>Add a study subject</h2>
+</div>
+<button type="button" class="dialog-close" id="close-dialog" aria-label="Close dialog">×</button>
+</div>
+<label for="subject-name">Subject or task name</label>
+<input id="subject-name" name="name" type="text" maxlength="70" placeholder="e.g. Data Structures — Trees" required>
+<div class="form-two-col">
+<div>
+<label for="subject-course">Course / category</label>
+<input id="subject-course" name="course" type="text" maxlength="35" placeholder="e.g. Computer Science">
+</div>
+<div>
+<label for="subject-due">Due date <span class="optional">(optional)</span>
+</label>
+<input id="subject-due" name="due" type="date">
+</div>
+</div>
+<label for="subject-difficulty">How challenging does it feel?</label>
+<select id="subject-difficulty" name="difficulty">
+<option value="1">Light — I know the basics</option>
+<option value="2" selected>Moderate — needs some practice</option>
+<option value="3">Challenging — needs more attention</option>
+</select>
+<label for="subject-notes">Next small step <span class="optional">(optional)</span>
+</label>
+<textarea id="subject-notes" name="notes" rows="3" maxlength="180" placeholder="e.g. Review lecture notes and solve 3 examples">
+</textarea>
+<div class="dialog-actions">
+<button type="button" class="button button-quiet" id="cancel-dialog">Cancel</button>
+<button type="submit" class="button button-primary">Add to my plan</button>
+</div>
+</form>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+  <script>
+"use strict";
 
-      <div class="workspace-label">WORKSPACE</div>
-      <nav class="nav-list">
-        <a class="nav-link active" href="#home" aria-current="page"><span class="nav-icon">⌂</span> Overview</a>
-        <a class="nav-link" href="#tasks"><span class="nav-icon">▤</span> My subjects <span class="nav-count" id="nav-count">0</span></a>
-        <a class="nav-link" href="#focus"><span class="nav-icon">◷</span> Focus timer</a>
-      </nav>
+const STORAGE_KEY = "studysprint.v1";
+const DAILY_GOAL_MINUTES = 60;
+const DEFAULT_FOCUS_MINUTES = 25;
+const state = loadState();
+let activeFilter = "all";
+let timerMode = "Focus";
+let timerDuration = DEFAULT_FOCUS_MINUTES * 60;
+let secondsLeft = timerDuration;
+let timerInterval = null;
+let toastTimeout = null;
 
-      <div class="sidebar-bottom">
-        <div class="tip-card">
-          <span class="tip-spark" aria-hidden="true">✳</span>
-          <p class="tip-title">Small steps add up.</p>
-          <p class="tip-copy">A focused 25 minutes is a great place to start.</p>
-        </div>
-        <div class="profile">
-          <div class="avatar" aria-hidden="true">S</div>
-          <div><strong>My study space</strong><span>Personal workspace</span></div>
-          <button class="icon-button" id="clear-data" title="Clear all saved data" aria-label="Clear all saved data">···</button>
-        </div>
+const $ = (selector) => document.querySelector(selector);
+const subjectList = $("#subject-list");
+const dialog = $("#subject-dialog");
+const form = $("#subject-form");
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && Array.isArray(saved.subjects) && Array.isArray(saved.sessions)) {
+      return { subjects: saved.subjects, sessions: saved.sessions };
+    }
+  } catch (error) {
+    console.warn("StudySprint could not load saved data.", error);
+  }
+  return { subjects: [], sessions: [] };
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    showToast("Could not save data in this browser.");
+    console.error("StudySprint could not save data.", error);
+  }
+}
+
+function localDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDueDate(dateString) {
+  if (!dateString) return "No deadline";
+  const due = new Date(`${dateString}T00:00:00`);
+  const today = new Date(`${localDateKey()}T00:00:00`);
+  const days = Math.round((due - today) / 86400000);
+  if (days < 0) return `${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"} overdue`;
+  if (days === 0) return "Due today";
+  if (days === 1) return "Due tomorrow";
+  return `Due ${due.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
+}
+
+function getPriority(subject) {
+  if (!subject.due) return subject.difficulty * 2;
+  const today = new Date(`${localDateKey()}T00:00:00`);
+  const due = new Date(`${subject.due}T00:00:00`);
+  const days = Math.ceil((due - today) / 86400000);
+  const urgency = days < 0 ? 12 : days === 0 ? 10 : days === 1 ? 8 : days <= 3 ? 6 : days <= 7 ? 3 : 1;
+  return urgency + subject.difficulty * 2;
+}
+
+function getSortedSubjects() {
+  return [...state.subjects].sort((a, b) => {
+    if (a.completed !== b.completed) return a.completed ? 1 : -1;
+    const priorityDifference = getPriority(b) - getPriority(a);
+    if (priorityDifference !== 0) return priorityDifference;
+    return a.createdAt - b.createdAt;
+  });
+}
+
+function escapeHTML(value = "") {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
+}
+
+function renderSubjects() {
+  const all = state.subjects;
+  const completed = all.filter((subject) => subject.completed).length;
+  const active = all.length - completed;
+  $("#nav-count").textContent = active;
+  $("#count-all").textContent = all.length;
+  $("#count-active").textContent = active;
+  $("#count-completed").textContent = completed;
+
+  let visible = getSortedSubjects();
+  if (activeFilter === "active") visible = visible.filter((subject) => !subject.completed);
+  if (activeFilter === "completed") visible = visible.filter((subject) => subject.completed);
+
+  $("#empty-state").classList.toggle("visible", visible.length === 0);
+  subjectList.hidden = visible.length === 0;
+  subjectList.innerHTML = visible.map((subject) => {
+    const due = formatDueDate(subject.due);
+    const overdue = subject.due && !subject.completed && new Date(`${subject.due}T00:00:00`) < new Date(`${localDateKey()}T00:00:00`);
+    const priorityText = subject.completed ? "DONE" : `PRIORITY ${getPriority(subject)}`;
+    const difficultyText = ["Light", "Moderate", "Challenging"][subject.difficulty - 1] || "Moderate";
+    return `<article class="subject-card ${subject.completed ? "is-done" : ""}">
+      <button class="check-button ${subject.completed ? "done" : ""}" data-action="toggle" data-id="${escapeHTML(subject.id)}" aria-label="${subject.completed ? "Mark as in progress" : "Mark as completed"} — ${escapeHTML(subject.name)}">${subject.completed ? "✓" : ""}</button>
+      <div class="subject-main">
+        <div class="subject-title">${escapeHTML(subject.name)}</div>
+        <div class="subject-meta"><span class="subject-course">${escapeHTML(subject.course || "Personal study")}</span><span class="meta-separator">•</span><span class="due-label ${overdue ? "overdue" : ""}">${escapeHTML(due)}</span><span class="difficulty difficulty-${subject.difficulty}">${difficultyText}</span></div>
+        ${subject.notes ? `<div class="subject-note">Next step: ${escapeHTML(subject.notes)}</div>` : ""}
       </div>
-    </aside>
+      <div class="subject-actions"><span class="priority-label">${priorityText}</span><button class="delete-button" data-action="delete" data-id="${escapeHTML(subject.id)}" aria-label="Delete ${escapeHTML(subject.name)}" title="Delete subject">×</button></div>
+    </article>`;
+  }).join("");
+}
 
-    <main class="main-content" id="home">
-      <header class="topbar">
-        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
-        <div class="topbar-right"><span class="today-label" id="today-label"></span><span class="top-avatar" aria-hidden="true">S</span></div>
-      </header>
+function getTodayMinutes() {
+  const today = localDateKey();
+  return state.sessions.filter((session) => session.date === today).reduce((total, session) => total + session.minutes, 0);
+}
 
-      <section class="welcome-row">
-        <div>
-          <p class="eyebrow">YOUR PERSONAL STUDY PLANNER</p>
-          <h1>Make room for <span>progress.</span></h1>
-          <p class="welcome-copy">Turn the next small step into a good study day.</p>
-        </div>
-        <button class="button button-primary" id="open-add"><span aria-hidden="true">＋</span> Add a subject</button>
-      </section>
+function renderSummary() {
+  const completed = state.subjects.filter((subject) => subject.completed).length;
+  const minutes = state.sessions.reduce((total, session) => total + session.minutes, 0);
+  const todayMinutes = getTodayMinutes();
+  $("#stat-subjects").textContent = state.subjects.filter((subject) => !subject.completed).length;
+  $("#stat-minutes").textContent = minutes;
+  $("#stat-completed").textContent = completed;
+  $("#goal-minutes").textContent = todayMinutes;
+  $("#goal-ring").style.setProperty("--progress", `${Math.min(todayMinutes / DAILY_GOAL_MINUTES, 1) * 360}deg`);
+  $("#goal-ring").setAttribute("aria-label", `${todayMinutes} of ${DAILY_GOAL_MINUTES} focus minutes completed today`);
+  if (todayMinutes >= DAILY_GOAL_MINUTES) {
+    $("#goal-message").textContent = "Daily goal reached!";
+    $("#goal-submessage").textContent = "Great work showing up for yourself today.";
+  } else if (todayMinutes > 0) {
+    $("#goal-message").textContent = "Nice momentum";
+    $("#goal-submessage").textContent = `${DAILY_GOAL_MINUTES - todayMinutes} more minutes to reach today's goal.`;
+  } else {
+    $("#goal-message").textContent = "A fresh start";
+    $("#goal-submessage").textContent = "Complete a focus session to make progress.";
+  }
+}
 
-      <section class="stats-grid" aria-label="Study summary">
-        <article class="stat-card">
-          <div class="stat-top"><span>Active subjects</span><span class="stat-icon indigo">▤</span></div>
-          <div class="stat-number" id="stat-subjects">0</div>
-          <div class="stat-note">Keep your priorities in view</div>
-        </article>
-        <article class="stat-card">
-          <div class="stat-top"><span>Minutes focused</span><span class="stat-icon mint">◷</span></div>
-          <div class="stat-number"><span id="stat-minutes">0</span><small> min</small></div>
-          <div class="stat-note">Your completed focus sessions</div>
-        </article>
-        <article class="stat-card">
-          <div class="stat-top"><span>Tasks completed</span><span class="stat-icon peach">✓</span></div>
-          <div class="stat-number" id="stat-completed">0</div>
-          <div class="stat-note">Every finished task counts</div>
-        </article>
-      </section>
+function renderDate() {
+  $("#today-label").textContent = new Date().toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+}
 
-      <section class="content-grid">
-        <div class="panel tasks-panel" id="tasks">
-          <div class="panel-heading">
-            <div><h2>Study priorities</h2><p>Sorted by deadline and difficulty</p></div>
-            <button class="text-button" id="add-another">＋ Add subject</button>
-          </div>
-          <div class="filter-row" role="group" aria-label="Filter subjects">
-            <button class="filter-chip selected" data-filter="all">All <span id="count-all">0</span></button>
-            <button class="filter-chip" data-filter="active">In progress <span id="count-active">0</span></button>
-            <button class="filter-chip" data-filter="completed">Completed <span id="count-completed">0</span></button>
-          </div>
-          <div id="subject-list" class="subject-list"></div>
-          <div id="empty-state" class="empty-state">
-            <div class="empty-illustration" aria-hidden="true"><span>✎</span></div>
-            <h3>Your study plan starts here</h3>
-            <p>Add a subject, assignment, or exam topic. We’ll sort your list by urgency and difficulty.</p>
-            <button class="button button-secondary" id="empty-add">Add your first subject</button>
-          </div>
-        </div>
+function render() {
+  renderDate();
+  renderSubjects();
+  renderSummary();
+}
 
-        <div class="right-column">
-          <section class="panel goal-panel">
-            <div class="panel-heading compact"><div><h2>Daily focus goal</h2><p>Build a steady routine</p></div><span class="goal-badge">TODAY</span></div>
-            <div class="goal-content">
-              <div class="goal-ring" id="goal-ring" role="img" aria-label="0 of 60 focus minutes completed"><div><strong id="goal-minutes">0</strong><span>of 60 min</span></div></div>
-              <div class="goal-message"><strong id="goal-message">A fresh start</strong><span id="goal-submessage">Complete a focus session to make progress.</span></div>
-            </div>
-            <div class="goal-footer"><span>Daily target</span><strong>60 minutes</strong></div>
-          </section>
+function openDialog() {
+  form.reset();
+  const dueInput = $("#subject-due");
+  dueInput.min = localDateKey();
+  dialog.showModal();
+  $("#subject-name").focus();
+}
 
-          <section class="panel focus-panel" id="focus">
-            <div class="panel-heading compact"><div><h2>Focus session</h2><p>One thing at a time</p></div><span class="focus-icon">◷</span></div>
-            <div class="timer-display" id="timer-display" aria-live="polite">25:00</div>
-            <p class="timer-caption" id="timer-caption">Focus time</p>
-            <div class="timer-controls">
-              <button class="button button-primary timer-start" id="timer-toggle">Start focus</button>
-              <button class="button button-quiet" id="timer-reset" aria-label="Reset timer">↺</button>
-            </div>
-            <div class="timer-mode"><button class="mode-chip selected" data-minutes="25" data-mode="Focus">25 min focus</button><button class="mode-chip" data-minutes="5" data-mode="Short break">5 min break</button></div>
-          </section>
-        </div>
-      </section>
-      <footer class="footer-note">A calmer plan, one session at a time <span>✳</span></footer>
+function closeDialog() {
+  dialog.close();
+}
 
-      <details class="project-notes">
-        <summary>Project details and report guide</summary>
-        <div class="project-notes-content">
-          <p class="eyebrow">PROJECT BRIEF</p>
-          <h2>StudySprint: a student study planner</h2>
-          <p>StudySprint is a responsive, browser-based planner for students managing multiple subjects, assignments, and exam topics. It brings study tasks, deadlines, difficulty, next actions, and focus sessions into one dashboard. Its transparent priority rule helps users choose what to work on first.</p>
-          <h3>Problem and goal</h3>
-          <p>Students may track coursework in several places and find it hard to turn a long list into a manageable next action. StudySprint provides one place to capture a study item, see its urgency, and spend a focused interval working on it. The primary target users are college and university students; independent learners are also suitable users.</p>
-          <h3>Features and scope</h3>
-          <ul><li>Add a task with its name, course, optional deadline, perceived difficulty, and next step.</li><li>Rank active tasks, filter by status, mark them complete or in progress, and delete them.</li><li>Use a 25-minute focus timer or a 5-minute break timer; pause and reset sessions.</li><li>Track completed focus minutes and progress toward a 60-minute daily goal.</li><li>Save tasks and sessions in the browser. Data is not uploaded to a server.</li></ul>
-          <p>Accounts, cloud sync, notifications, collaboration, calendar integration, syllabus import, and AI-generated advice are outside the current scope. AI assisted development; the running app does not call an AI service.</p>
-          <h3>Priority rule</h3>
-          <p>Tasks are sorted by urgency points plus twice their difficulty score. Difficulty is Light = 1, Moderate = 2, or Challenging = 3. Urgency is 12 for overdue, 10 due today, 8 due tomorrow, 6 due within 3 days, 3 due within 7 days, and 1 due later. A task without a deadline receives only its difficulty points. Higher scores appear first, with older tasks first in a tie. This is an organizational hint, not a prediction of grades or workload.</p>
-          <h3>Tools and implementation</h3>
-          <ul><li>HTML5 provides the semantic page structure, controls, and task-entry dialog.</li><li>CSS3 provides the responsive dashboard and visual states.</li><li>Vanilla JavaScript implements task management, sorting, filtering, timer behavior, and rendering.</li><li>Browser LocalStorage stores task and focus-session data under <code>studysprint.v1</code>.</li><li>Codex AI assistant supported project planning and code drafting. Keep actual prompts and screenshots from your work for the submitted report.</li></ul>
-          <p>The subject data model contains <code>id</code>, <code>name</code>, <code>course</code>, <code>due</code>, <code>difficulty</code>, <code>notes</code>, <code>completed</code>, and <code>createdAt</code>. A focus-session record contains <code>date</code>, <code>minutes</code>, and <code>completedAt</code>. The app works without a build step or package installation. Google Fonts are optional; system fallbacks are provided.</p>
-          <h3>Report-ready draft</h3>
-          <h4>1. Introduction</h4>
-          <p>Students may have several assignments, course topics, and examination deadlines at the same time. When those obligations are written in separate places, it can be difficult to decide what to work on next. StudySprint is a responsive web application that brings a student's study tasks and focus sessions together in one dashboard. A student can record a task, set an optional deadline and difficulty, write a small next action, and see active tasks ordered by a simple priority rule.</p>
-          <p>The application was developed with AI assistance for planning, interface structure, and implementation support. The developer reviewed and adapted the generated code and used an explicit deadline-and-difficulty formula so task ordering is visible to the user. The running application does not send data to an AI service; task details are stored in the browser on the user's device.</p>
-          <h4>2. Target User</h4>
-          <p>The primary target users are college and university students who manage several subjects and want to keep deadlines, next actions, and focused study time in one place. The interface is designed for an individual user who wants a simple planner rather than a full learning management system. It may also suit independent learners who want a task list and a basic focus timer.</p>
-          <h4>3. Tools Used</h4>
-          <p>HTML5 is used for structure and controls; CSS3 for the responsive layout and visual states; JavaScript for task management, priority ordering, filters, and timer logic; and LocalStorage for browser-local persistence. Codex AI assistant was used to assist with project scoping, interface planning, and code drafting. The application runs in a modern web browser.</p>
-          <h4>4. Prompt Engineering Process</h4>
-          <p>Use these as prompt examples and capture genuine screenshots of your own AI interactions. Do not present these examples as historical evidence unless you actually used them.</p>
-          <ol><li><strong>Idea/problem analysis:</strong> “Suggest a small web application for college students that addresses a specific study-planning problem. Keep the first version feasible with HTML, CSS, and vanilla JavaScript, and list the target user, problem, and measurable core features.”</li><li><strong>Requirements/features:</strong> “Turn the selected study-planner idea into functional requirements. Separate must-have features from future scope. Include empty states, invalid input, persistence, and accessibility considerations.”</li><li><strong>UI/layout design:</strong> “Plan a responsive dashboard for a student study planner. Include a summary, priority task list, daily goal, focus timer, and an add-task dialog. Describe the page flow and mobile behavior.”</li><li><strong>Code generation:</strong> “Implement the agreed StudySprint UI in semantic HTML, responsive CSS, and plain JavaScript. Add task create/complete/delete, priority sorting, browser-local persistence, filters, and a focus/break timer. Do not use a backend or claim AI features in the app.”</li><li><strong>Testing plan:</strong> “Create a manual test checklist for task creation, date/difficulty sorting, filters, completion, deletion, timer start/pause/reset, persistence after reload, mobile layout, and empty states. Do not claim a check passed unless it has been run.”</li><li><strong>Debugging and improvement:</strong> “Review the implementation for incorrect date handling, unsafe HTML insertion, timer state errors, and keyboard/accessibility problems. Explain each issue and propose a minimal correction.”</li></ol>
-          <h4>5. Application Design and Development</h4>
-          <p>StudySprint uses a single-page dashboard. Its desktop layout has a navigation sidebar and a main area with a summary row, study-priority list, daily-goal indicator, and focus timer. On narrow screens, the sidebar is hidden and the content stacks into one column. An add-task dialog collects task name, category, deadline, difficulty, and next action. JavaScript stores each task as a structured object, sorts active items by the documented score, and re-renders the interface after changes. Completed focus sessions update the total and daily goal. The browser's LocalStorage API preserves the data on the current browser and device.</p>
-          <h4>6. Final Application</h4>
-          <p>The application supports task entry, optional deadlines, difficulty labels, priority ordering, next-step notes, list filters, completion and deletion actions, a focus timer with a short-break mode, a daily focus-goal indicator, and browser-local storage. The student can open this HTML file in a modern browser without creating an account. Add a public deployment URL only if you publish the application; otherwise describe it as a local browser application.</p>
-          <h4>7. Conclusion</h4>
-          <p>StudySprint organizes study tasks and focused work sessions in a single lightweight interface. Its priority score helps users notice urgent or challenging work, while the next-step field encourages turning a large subject into an actionable task. AI assistance supported the development workflow, while the final app's behavior remains transparent and browser-local. Future improvements could include editable weights, calendar export, data backup/import, reminders, user research, and an optional AI study-planning service with clear consent and privacy controls.</p>
-          <h3>Manual demonstration checklist</h3>
-          <p>Run and record these checks yourself before reporting their results: add tasks with different deadlines and difficulties; confirm their order; use each filter; mark items complete and in progress; delete an item; start, pause, resume, and reset both timer modes; complete a focus session and inspect the daily total; reload the page to check persistence; and try the layout at phone width and navigate the form by keyboard.</p>
-          <h3>Limitations and future work</h3>
-          <p>Data belongs to the current browser profile and device; clearing browser storage removes it. The timer needs the page to remain open and does not notify after the tab closes. Difficulty is self-reported and the formula does not estimate task duration, prerequisites, or available study hours. No user-study results are included; report such results only if you conduct the study.</p>
-          <h3>Submission reminders</h3>
-          <ul><li>Replace the cover-page placeholders with your project title and student details.</li><li>Capture genuine screenshots of the dashboard, add-task dialog, ranked task list, and timer/goal state; add captions and a page-structure diagram.</li><li>Refresh contents-page numbers after laying out the final report.</li><li>Include a real public link only after deployment; do not invent one.</li></ul>
-        </div>
-      </details>
-    </main>
-  </div>
+function showToast(message) {
+  const toast = $("#toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove("show"), 2600);
+}
 
-  <dialog id="subject-dialog" class="subject-dialog">
-    <form id="subject-form" method="dialog">
-      <div class="dialog-header"><div><p class="eyebrow">MAKE A PLAN</p><h2>Add a study subject</h2></div><button type="button" class="dialog-close" id="close-dialog" aria-label="Close dialog">×</button></div>
-      <label for="subject-name">Subject or task name</label>
-      <input id="subject-name" name="name" type="text" maxlength="70" placeholder="e.g. Data Structures — Trees" required>
-      <div class="form-two-col">
-        <div><label for="subject-course">Course / category</label><input id="subject-course" name="course" type="text" maxlength="35" placeholder="e.g. Computer Science"></div>
-        <div><label for="subject-due">Due date <span class="optional">(optional)</span></label><input id="subject-due" name="due" type="date"></div>
-      </div>
-      <label for="subject-difficulty">How challenging does it feel?</label>
-      <select id="subject-difficulty" name="difficulty"><option value="1">Light — I know the basics</option><option value="2" selected>Moderate — needs some practice</option><option value="3">Challenging — needs more attention</option></select>
-      <label for="subject-notes">Next small step <span class="optional">(optional)</span></label>
-      <textarea id="subject-notes" name="notes" rows="3" maxlength="180" placeholder="e.g. Review lecture notes and solve 3 examples"></textarea>
-      <div class="dialog-actions"><button type="button" class="button button-quiet" id="cancel-dialog">Cancel</button><button type="submit" class="button button-primary">Add to my plan</button></div>
-    </form>
-  </dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+function handleSubjectSubmit(event) {
+  event.preventDefault();
+  const formData = new FormData(form);
+  const subject = {
+    id: (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`),
+    name: String(formData.get("name") || "").trim(),
+    course: String(formData.get("course") || "").trim(),
+    due: String(formData.get("due") || ""),
+    difficulty: Number(formData.get("difficulty") || 2),
+    notes: String(formData.get("notes") || "").trim(),
+    completed: false,
+    createdAt: Date.now()
+  };
+  if (!subject.name) return;
+  state.subjects.push(subject);
+  saveState();
+  closeDialog();
+  render();
+  showToast("Added to your study plan.");
+}
+
+function handleSubjectAction(event) {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+  const subject = state.subjects.find((item) => item.id === button.dataset.id);
+  if (!subject) return;
+  if (button.dataset.action === "toggle") {
+    subject.completed = !subject.completed;
+    showToast(subject.completed ? "Task marked complete." : "Task moved back to in progress.");
+  } else if (button.dataset.action === "delete") {
+    state.subjects = state.subjects.filter((item) => item.id !== subject.id);
+    showToast("Subject removed from your plan.");
+  }
+  saveState();
+  render();
+}
+
+function renderTimer() {
+  const minutes = Math.floor(secondsLeft / 60).toString().padStart(2, "0");
+  const seconds = (secondsLeft % 60).toString().padStart(2, "0");
+  $("#timer-display").textContent = `${minutes}:${seconds}`;
+  $("#timer-caption").textContent = timerMode === "Focus" ? "Focus time" : "Take a short break";
+  $("#timer-toggle").textContent = timerInterval ? "Pause session" : "Start focus";
+}
+
+function finishTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  if (timerMode === "Focus") {
+    const minutes = Math.round(timerDuration / 60);
+    state.sessions.push({ date: localDateKey(), minutes, completedAt: Date.now() });
+    saveState();
+    renderSummary();
+    showToast(`${minutes}-minute focus session complete. Nice work!`);
+  } else {
+    showToast("Break complete. Ready when you are.");
+  }
+  secondsLeft = timerDuration;
+  renderTimer();
+}
+
+function toggleTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    renderTimer();
+    return;
+  }
+  timerInterval = setInterval(() => {
+    secondsLeft -= 1;
+    if (secondsLeft <= 0) finishTimer();
+    else renderTimer();
+  }, 1000);
+  renderTimer();
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  secondsLeft = timerDuration;
+  renderTimer();
+}
+
+function setTimerMode(button) {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerMode = button.dataset.mode;
+  timerDuration = Number(button.dataset.minutes) * 60;
+  secondsLeft = timerDuration;
+  document.querySelectorAll(".mode-chip").forEach((chip) => chip.classList.toggle("selected", chip === button));
+  $("#timer-toggle").textContent = timerMode === "Focus" ? "Start focus" : "Start break";
+  renderTimer();
+}
+
+function clearAllData() {
+  if (!state.subjects.length && !state.sessions.length) {
+    showToast("There is no saved study data to clear.");
+    return;
+  }
+  if (!window.confirm("Clear all subjects and focus history saved in this browser? This cannot be undone.")) return;
+  state.subjects = [];
+  state.sessions = [];
+  saveState();
+  render();
+  showToast("Your study data has been cleared.");
+}
+
+$("#open-add").addEventListener("click", openDialog);
+$("#add-another").addEventListener("click", openDialog);
+$("#empty-add").addEventListener("click", openDialog);
+$("#close-dialog").addEventListener("click", closeDialog);
+$("#cancel-dialog").addEventListener("click", closeDialog);
+form.addEventListener("submit", handleSubjectSubmit);
+subjectList.addEventListener("click", handleSubjectAction);
+$("#timer-toggle").addEventListener("click", toggleTimer);
+$("#timer-reset").addEventListener("click", resetTimer);
+$("#clear-data").addEventListener("click", clearAllData);
+document.querySelectorAll(".mode-chip").forEach((button) => button.addEventListener("click", () => setTimerMode(button)));
+document.querySelectorAll(".filter-chip").forEach((button) => button.addEventListener("click", () => {
+  activeFilter = button.dataset.filter;
+  document.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.toggle("selected", chip === button));
+  renderSubjects();
+}));
+
+render();
+renderTimer();
+
+  </script>
 </body>
 </html>
+
